@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rekapitulasi Nilai MTQ XII 2026 - Kab. Seram Bagian Timur</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Serif:wght@400;600;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<style>
+:root {
+--orange-deep: #C45C0A;
+--orange-main: #E07820;
+--orange-light: #F5A340;
+--orange-pale: #FDE8C8;
+--gold: #D4A017;
+--gold-light: #F0C94A;
+--dark: #1A0E00;
+--dark-brown: #3B1F00;
+--text-main: #2C1600;
+--white: #FFFDF8;
+--cream: #FFF6E8;
+--border: #D4813A;
+--shadow: rgba(180,80,0,0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: 'Noto Serif', serif;
+background: var(--cream);
+color: var(--text-main);
+min-height: 100vh;
+}
+
+/* ── ISLAMIC ORNAMENT SVG PATTERN ── */
+body::before {
+content: '';
+position: fixed;
+inset: 0;
+background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23E07820' fill-opacity='0.06'%3E%3Cpath d='M40 0 L50 30 L80 40 L50 50 L40 80 L30 50 L0 40 L30 30 Z'/%3E%3Cpath d='M40 20 L45 35 L60 40 L45 45 L40 60 L35 45 L20 40 L35 35 Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+pointer-events: none;
+z-index: 0;
+}
+
+/* ── HEADER ── */
+header {
+background: linear-gradient(135deg, var(--orange-deep) 0%, var(--orange-main) 50%, var(--orange-light) 100%);
+position: relative;
+overflow: hidden;
+box-shadow: 0 4px 24px var(--shadow);
+}
+
+header::before {
+content: '';
+position: absolute;
+inset: 0;
+background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23FFFFFF' fill-opacity='0.07'%3E%3Cpath d='M60 0 L70 40 L110 40 L78 65 L90 100 L60 78 L30 100 L42 65 L10 40 L50 40 Z'/%3E%3Cpath d='M60 15 L66 36 L88 36 L70 49 L77 70 L60 58 L43 70 L50 49 L32 36 L54 36 Z'/%3E%3C/g%3E%3C/svg%3E");
+pointer-events: none;
+}
+
+/* Arabesque border top */
+header::after {
+content: '';
+position: absolute;
+bottom: 0; left: 0; right: 0;
+height: 6px;
+background: repeating-linear-gradient(90deg, var(--gold) 0px, var(--gold) 10px, var(--gold-light) 10px, var(--gold-light) 20px);
+}
+
+.header-inner {
+position: relative;
+z-index: 1;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 18px 32px 24px;
+gap: 20px;
+}
+
+.logo-box {
+width: 100px; height: 100px;
+flex-shrink: 0;
+display: flex; align-items: center; justify-content: center;
+background: rgba(255,255,255,0.15);
+border-radius: 50%;
+border: 3px solid rgba(255,255,255,0.4);
+backdrop-filter: blur(4px);
+overflow: hidden;
+box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+}
+
+.logo-box svg { width: 76px; height: 76px; }
+
+.header-text {
+flex: 1;
+text-align: center;
+color: var(--white);
+}
+
+.header-text .bismillah {
+font-family: 'Amiri', serif;
+font-size: 1.8rem;
+color: var(--gold-light);
+letter-spacing: 0.04em;
+margin-bottom: 4px;
+text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+}
+
+.header-text h1 {
+font-family: 'Cairo', sans-serif;
+font-size: 1.55rem;
+font-weight: 800;
+line-height: 1.2;
+text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+letter-spacing: 0.01em;
+}
+
+.header-text h2 {
+font-family: 'Cairo', sans-serif;
+font-size: 1.05rem;
+font-weight: 600;
+color: var(--orange-pale);
+margin-top: 4px;
+}
+
+.header-text .subtitle {
+font-size: 0.88rem;
+color: rgba(255,255,255,0.85);
+margin-top: 3px;
+font-style: italic;
+}
+
+/* Ornament divider */
+.ornament-bar {
+text-align: center;
+background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+color: var(--dark-brown);
+font-size: 1.1rem;
+letter-spacing: 0.5em;
+padding: 4px 0;
+}
+
+/* ── MAIN LAYOUT ── */
+.container {
+position: relative;
+z-index: 1;
+max-width: 1280px;
+margin: 0 auto;
+padding: 28px 20px 48px;
+}
+
+/* ── TABS ── */
+.tabs {
+display: flex;
+gap: 4px;
+margin-bottom: 24px;
+background: var(--orange-pale);
+border: 2px solid var(--border);
+border-radius: 12px;
+padding: 6px;
+box-shadow: 0 2px 10px var(--shadow);
+}
+
+.tab-btn {
+flex: 1;
+padding: 10px 8px;
+border: none;
+border-radius: 8px;
+background: transparent;
+font-family: 'Cairo', sans-serif;
+font-weight: 700;
+font-size: 0.92rem;
+color: var(--dark-brown);
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.tab-btn.active {
+background: linear-gradient(135deg, var(--orange-main), var(--orange-deep));
+color: white;
+box-shadow: 0 2px 10px rgba(180,80,0,0.35);
+}
+
+.tab-btn:hover:not(.active) {
+background: rgba(224,120,32,0.15);
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── CARD ── */
+.card {
+background: var(--white);
+border: 2px solid var(--border);
+border-radius: 14px;
+padding: 28px;
+box-shadow: 0 4px 20px var(--shadow);
+margin-bottom: 24px;
+position: relative;
+overflow: hidden;
+}
+
+.card::before {
+content: '';
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 4px;
+background: linear-gradient(90deg, var(--orange-deep), var(--gold), var(--orange-light));
+}
+
+.card-title {
+font-family: 'Cairo', sans-serif;
+font-size: 1.15rem;
+font-weight: 800;
+color: var(--orange-deep);
+margin-bottom: 20px;
+padding-bottom: 10px;
+border-bottom: 2px dashed var(--orange-pale);
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.card-title::before {
+content: '◆';
+color: var(--gold);
+font-size: 0.85rem;
+}
+
+/* ── FORM GRID ── */
+.form-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+gap: 18px;
+}
+
+.form-group {
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+
+label {
+font-family: 'Cairo', sans-serif;
+font-weight: 700;
+font-size: 0.84rem;
+color: var(--dark-brown);
+letter-spacing: 0.02em;
+}
+
+select, input[type="text"], input[type="number"] {
+border: 2px solid var(--border);
+border-radius: 8px;
+padding: 9px 12px;
+font-family: 'Noto Serif', serif;
+font-size: 0.92rem;
+color: var(--text-main);
+background: var(--cream);
+outline: none;
+transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+select:focus, input:focus {
+border-color: var(--orange-main);
+box-shadow: 0 0 0 3px rgba(224,120,32,0.18);
+}
+
+/* ── SCORING TABLE ── */
+.scoring-table {
+width: 100%;
+border-collapse: collapse;
+font-size: 0.9rem;
+margin-top: 8px;
+}
+
+.scoring-table th {
+background: linear-gradient(135deg, var(--orange-deep), var(--orange-main));
+color: white;
+font-family: 'Cairo', sans-serif;
+font-weight: 700;
+padding: 10px 14px;
+text-align: left;
+font-size: 0.88rem;
+}
+
+.scoring-table th:first-child { border-radius: 8px 0 0 0; }
+.scoring-table th:last-child { border-radius: 0 8px 0 0; }
+
+.scoring-table td {
+padding: 9px 14px;
+border-bottom: 1px solid var(--orange-pale);
+vertical-align: middle;
+}
+
+.scoring-table tr:hover td { background: rgba(245,163,64,0.08); }
+
+.scoring-table input[type="number"] {
+width: 90px;
+padding: 6px 10px;
+text-align: center;
+font-size: 0.95rem;
+}
+
+.bidang-name {
+font-weight: 600;
+color: var(--dark-brown);
+}
+
+/* ── BUTTONS ── */
+.btn {
+display: inline-flex;
+align-items: center;
+gap: 7px;
+padding: 10px 22px;
+border: none;
+border-radius: 9px;
+font-family: 'Cairo', sans-serif;
+font-weight: 700;
+font-size: 0.92rem;
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.btn-primary {
+background: linear-gradient(135deg, var(--orange-deep), var(--orange-main));
+color: white;
+box-shadow: 0 3px 12px rgba(180,80,0,0.3);
+}
+
+.btn-primary:hover {
+transform: translateY(-1px);
+box-shadow: 0 5px 18px rgba(180,80,0,0.4);
+}
+
+.btn-success {
+background: linear-gradient(135deg, #2e7d32, #43a047);
+color: white;
+box-shadow: 0 3px 12px rgba(46,125,50,0.3);
+}
+
+.btn-success:hover { transform: translateY(-1px); }
+
+.btn-gold {
+background: linear-gradient(135deg, var(--gold), var(--gold-light));
+color: var(--dark);
+box-shadow: 0 3px 12px rgba(212,160,23,0.3);
+}
+
+.btn-gold:hover { transform: translateY(-1px); }
+
+.btn-danger {
+background: linear-gradient(135deg, #b71c1c, #e53935);
+color: white;
+box-shadow: 0 3px 10px rgba(183,28,28,0.25);
+}
+
+.btn-actions {
+display: flex;
+gap: 12px;
+flex-wrap: wrap;
+margin-top: 20px;
+}
+
+/* ── REKAP TABLE ── */
+#rekap-container {
+overflow-x: auto;
+border-radius: 10px;
+border: 2px solid var(--border);
+box-shadow: 0 3px 14px var(--shadow);
+}
+
+#rekap-table {
+width: 100%;
+border-collapse: collapse;
+font-size: 0.82rem;
+min-width: 800px;
+}
+
+#rekap-table thead tr:first-child th {
+background: linear-gradient(135deg, var(--orange-deep), var(--orange-main));
+color: white;
+font-family: 'Cairo', sans-serif;
+font-weight: 700;
+padding: 10px 10px;
+text-align: center;
+font-size: 0.84rem;
+border: 1px solid rgba(255,255,255,0.2);
+}
+
+#rekap-table thead tr:nth-child(2) th {
+background: var(--orange-light);
+color: var(--dark);
+font-family: 'Cairo', sans-serif;
+font-weight: 700;
+padding: 7px 10px;
+font-size: 0.78rem;
+border: 1px solid var(--border);
+text-align: center;
+}
+
+#rekap-table tbody td {
+padding: 8px 10px;
+border: 1px solid rgba(212,129,58,0.3);
+text-align: center;
+vertical-align: middle;
+}
+
+#rekap-table tbody tr:nth-child(even) td { background: var(--orange-pale); }
+#rekap-table tbody tr:hover td { background: rgba(224,120,32,0.14); }
+
+.rank-badge {
+display: inline-flex;
+align-items: center; justify-content: center;
+width: 28px; height: 28px;
+border-radius: 50%;
+font-family: 'Cairo', sans-serif;
+font-weight: 800;
+font-size: 0.78rem;
+}
+
+.rank-1 { background: var(--gold); color: var(--dark); }
+.rank-2 { background: #B0BEC5; color: var(--dark); }
+.rank-3 { background: #CD7F32; color: white; }
+.rank-other { background: var(--orange-pale); color: var(--dark-brown); border: 1px solid var(--border); }
+
+.total-cell {
+font-family: 'Cairo', sans-serif;
+font-weight: 800;
+color: var(--orange-deep);
+font-size: 0.92rem;
+}
+
+.empty-rekap {
+text-align: center;
+padding: 40px;
+color: #999;
+font-style: italic;
+font-size: 0.95rem;
+}
+
+/* ── FILTER ROW ── */
+.filter-row {
+display: flex;
+gap: 14px;
+flex-wrap: wrap;
+margin-bottom: 18px;
+align-items: flex-end;
+}
+
+.filter-row .form-group { min-width: 180px; }
+
+/* ── ORNAMENT FOOTER ── */
+.ornament-footer {
+text-align: center;
+margin-top: 40px;
+color: var(--orange-main);
+font-size: 1.6rem;
+letter-spacing: 0.3em;
+opacity: 0.5;
+}
+
+/* ── TOAST ── */
+#toast {
+position: fixed;
+bottom: 28px; right: 28px;
+background: linear-gradient(135deg, var(--orange-deep), var(--orange-main));
+color: white;
+padding: 12px 22px;
+border-radius: 10px;
+font-family: 'Cairo', sans-serif;
+font-weight: 700;
+font-size: 0.9rem;
+box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+z-index: 9999;
+opacity: 0;
+transform: translateY(20px);
+transition: all 0.3s;
+pointer-events: none;
+}
+#toast.show { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 700px) {
+.header-inner { flex-direction: column; align-items: center; gap: 14px; }
+.header-text h1 { font-size: 1.15rem; }
+.tabs { flex-direction: column; }
+.form-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+<div class="header-inner">
+<!-- Logo Kabupaten Seram Bagian Timur (Kanan) -->
+    <img src="https://kimi-web-img.moonshot.cn/img/upload.wikimedia.org/651ac4d806fab6152b4b5713f4fb3d1377dcf90b.png" 
+         alt="Logo Kabupaten Seram Bagian Timur" 
+         style="width: 85px; height: 85px; object-fit: contain; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4)); transition: transform 0.3s ease;"
+         onmouseover="this.style.transform='scale(1.1)'" 
+         onmouseout="this.style.transform='scale(1)'">
+
+
+<!-- Teks tengah -->
+<div class="header-text">
+<div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+<h1>REKAPITULASI NILAI AKHIR<br>MUSABAQOH TILAWATIL QUR'AN XII</h1>
+<h2>TAHUN 2026 — TINGKAT KABUPATEN SERAM BAGIAN TIMUR</h2>
+<div class="subtitle">Lembaga Pengembangan Tilawatil Qur'an (LPTQ) Kab. Seram Bagian Timur</div>
+<div class="subtitle">Created By MOH MUNIRUL MUKMIN</div>
+</div>
+
+<!-- Logo LPTQ (Kiri) -->
+    <img src="https://kimi-web-img.moonshot.cn/img/imgv2-2-f.scribdassets.com/2a8ec1d0b1c7f008a1e5bae4518ba3c0c4cfd4c7" 
+         alt="Logo LPTQ" 
+         style="width: 85px; height: 85px; object-fit: contain; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4)); transition: transform 0.3s ease;"
+         onmouseover="this.style.transform='scale(1.1)'" 
+         onmouseout="this.style.transform='scale(1)'">
+
+</header>
+
+<!-- ══ MAIN ══ -->
+<div class="container">
+
+<!-- TABS -->
+<div class="tabs">
+<button class="tab-btn active" onclick="switchTab('input')">✏️ Input Nilai Dewan Hakim</button>
+<button class="tab-btn" onclick="switchTab('rekap')">📊 Rekapitulasi Akhir</button>
+</div>
+
+<!-- ════ TAB: INPUT ════ -->
+<div id="tab-input" class="tab-panel active">
+<div class="card">
+<div class="card-title">Form Input Nilai Dewan Hakim</div>
+
+<div class="form-grid">
+<div class="form-group">
+<label>Nomor Peserta</label>
+<input type="text" id="noPeserta" placeholder="Contoh: 001">
+</div>
+<div class="form-group">
+<label>Jenis Cabang</label>
+<select id="cabang" onchange="updateGolongan()">
+<option value="">-- Pilih Cabang --</option>
+<option value="Tilawah">Tilawah</option>
+<option value="Tartil">Tartil</option>
+<option value="Hifdzil">Hifdzil</option>
+<option value="Syarhil">Syarhil</option>
+</select>
+</div>
+<div class="form-group">
+<label>Golongan</label>
+<select id="golongan" onchange="updateBidang()">
+<option value="">-- Pilih Golongan --</option>
+</select>
+</div>
+<div class="form-group">
+<label>Nama Dewan Hakim</label>
+<input type="text" id="namaHakim" placeholder="Tulis nama hakim...">
+</div>
+<div class="form-group">
+<label>Bidang Penilaian</label>
+<select id="bidangPenilaian">
+<option value="">-- Pilih Bidang --</option>
+</select>
+</div>
+<div class="form-group">
+<label>Nilai (Maks. 100)</label>
+<input type="number" id="nilaiInput" min="0" max="100" placeholder="0 - 100">
+</div>
+</div>
+
+<div class="btn-actions">
+<button class="btn btn-primary" onclick="tambahNilai()">➕ Tambah Nilai</button>
+<button class="btn btn-danger" onclick="resetForm()">🗑 Reset Form</button>
+</div>
+</div>
+
+<!-- Tabel nilai yang baru diinput -->
+<div class="card">
+<div class="card-title">Data Nilai Belum Direkap</div>
+<div style="overflow-x:auto">
+<table class="scoring-table" id="inputTable">
+<thead>
+<tr>
+<th>#</th>
+<th>No. Peserta</th>
+<th>Cabang</th>
+<th>Golongan</th>
+<th>Bidang Penilaian</th>
+<th>Nama Hakim</th>
+<th>Nilai</th>
+<th>Aksi</th>
+</tr>
+</thead>
+<tbody id="inputTableBody">
+<tr><td colspan="8" style="text-align:center;color:#aaa;padding:20px;font-style:italic;">Belum ada data. Silakan input nilai di atas.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="btn-actions">
+<button class="btn btn-gold" onclick="simpanKeRekap()">💾 Simpan & Rekap Nilai</button>
+</div>
+</div>
+</div>
+
+<!-- ════ TAB: REKAP ════ -->
+<div id="tab-rekap" class="tab-panel">
+<div class="card">
+<div class="card-title">Filter Rekapitulasi</div>
+<div class="filter-row">
+<div class="form-group">
+<label>Filter Cabang</label>
+<select id="filterCabang" onchange="renderRekap()">
+<option value="">Semua Cabang</option>
+<option value="Tilawah">Tilawah</option>
+<option value="Tartil">Tartil</option>
+<option value="Hifdzil">Hifdzil</option>
+<option value="Syarhil">Syarhil</option>
+</select>
+</div>
+<div class="form-group">
+<label>Filter Golongan</label>
+<select id="filterGolongan" onchange="renderRekap()">
+<option value="">Semua Golongan</option>
+</select>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-end">
+<button class="btn btn-success" onclick="exportExcel()">📥 Unduh Excel</button>
+<button class="btn btn-gold" onclick="renderRekap()">🔄 Refresh</button>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">Tabel Rekapitulasi Nilai Akhir Dewan Hakim</div>
+<div id="rekap-container">
+<div class="empty-rekap">Belum ada data rekapitulasi. Silakan input dan simpan nilai terlebih dahulu.</div>
+</div>
+</div>
+</div>
+
+<div class="ornament-footer">❧ &nbsp; ✾ &nbsp; ❧ &nbsp; ✾ &nbsp; ❧ &nbsp; ✾ &nbsp; ❧</div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ════════════════════════════════════════
+// DATA DEFINITIONS
+// ════════════════════════════════════════
+const GOLONGAN_MAP = {
+Tilawah: ['Dewasa', 'Remaja', 'Anak-anak', 'HQ 1 Juz', 'HQ 5 Juz'],
+Tartil: ['Murattal'],
+Hifdzil: ['1 Juz', '5 Juz', '10 Juz', '20 Juz', '30 Juz'],
+Syarhil: ['Syarhil']
+};
+
+const BIDANG_MAP = {
+Tilawah: {
+'Dewasa': ['Suara', 'Tajwid', 'Fashahah', 'Lagu', 'Irama dan Suara'],
+'Remaja': ['Suara', 'Tajwid', 'Fashahah', 'Lagu', 'Irama dan Suara'],
+'Anak-anak': ['Suara', 'Tajwid', 'Fashahah', 'Lagu', 'Irama dan Suara'],
+'HQ 1 Juz': ['Suara', 'Tajwid', 'Fashahah', 'Lagu', 'Irama dan Suara'],
+'HQ 5 Juz': ['Suara', 'Tajwid', 'Fashahah', 'Lagu', 'Irama dan Suara'],
+},
+Tartil: {
+'Murattal': ['Tajwid', 'Fashahah', 'Tilawah'],
+},
+Hifdzil: {
+'1 Juz': ['Tahfidz', 'Tajwid', 'Fashahah'],
+'5 Juz': ['Tahfidz', 'Tajwid', 'Fashahah'],
+'10 Juz': ['Tahfidz', 'Tajwid', 'Fashahah'],
+'20 Juz': ['Tahfidz', 'Tajwid', 'Fashahah'],
+'30 Juz': ['Tahfidz', 'Tajwid', 'Fashahah'],
+},
+Syarhil: {
+'Syarhil': ['Terjemah dan Materi', 'Penghayatan dan Retorika', 'Tilawah'],
+}
+};
+
+let inputRows = []; // temp before save
+let rekapData = []; // saved rekap rows
+
+// ════════════════════════════════════════
+// FORM LOGIC
+// ════════════════════════════════════════
+function updateGolongan() {
+const cabang = document.getElementById('cabang').value;
+const sel = document.getElementById('golongan');
+sel.innerHTML = '<option value="">-- Pilih Golongan --</option>';
+(GOLONGAN_MAP[cabang] || []).forEach(g => {
+sel.innerHTML += `<option value="${g}">${g}</option>`;
+});
+document.getElementById('bidangPenilaian').innerHTML = '<option value="">-- Pilih Bidang --</option>';
+
+// Also update filter golongan
+const fg = document.getElementById('filterGolongan');
+fg.innerHTML = '<option value="">Semua Golongan</option>';
+(GOLONGAN_MAP[cabang] || []).forEach(g => {
+fg.innerHTML += `<option value="${g}">${g}</option>`;
+});
+}
+
+function updateBidang() {
+const cabang = document.getElementById('cabang').value;
+const golongan = document.getElementById('golongan').value;
+const sel = document.getElementById('bidangPenilaian');
+sel.innerHTML = '<option value="">-- Pilih Bidang --</option>';
+const bidangs = (BIDANG_MAP[cabang] || {})[golongan] || [];
+bidangs.forEach(b => { sel.innerHTML += `<option value="${b}">${b}</option>`; });
+}
+
+function tambahNilai() {
+const noPeserta = document.getElementById('noPeserta').value.trim();
+const cabang = document.getElementById('cabang').value;
+const golongan = document.getElementById('golongan').value;
+const hakim = document.getElementById('namaHakim').value.trim();
+const bidang = document.getElementById('bidangPenilaian').value;
+const nilai = parseFloat(document.getElementById('nilaiInput').value);
+
+if (!noPeserta || !cabang || !golongan || !hakim || !bidang || isNaN(nilai)) {
+showToast('⚠ Harap lengkapi semua kolom!');
+return;
+}
+if (nilai < 0 || nilai > 100) {
+showToast('⚠ Nilai harus antara 0 - 100!');
+return;
+}
+
+inputRows.push({ noPeserta, cabang, golongan, hakim, bidang, nilai });
+renderInputTable();
+document.getElementById('nilaiInput').value = '';
+showToast('✅ Nilai berhasil ditambahkan!');
+}
+
+function hapusInputRow(idx) {
+inputRows.splice(idx, 1);
+renderInputTable();
+}
+
+function resetForm() {
+document.getElementById('noPeserta').value = '';
+document.getElementById('cabang').value = '';
+document.getElementById('golongan').innerHTML = '<option value="">-- Pilih Golongan --</option>';
+document.getElementById('bidangPenilaian').innerHTML = '<option value="">-- Pilih Bidang --</option>';
+document.getElementById('namaHakim').value = '';
+document.getElementById('nilaiInput').value = '';
+inputRows = [];
+renderInputTable();
+}
+
+function renderInputTable() {
+const tbody = document.getElementById('inputTableBody');
+if (!inputRows.length) {
+tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#aaa;padding:20px;font-style:italic;">Belum ada data. Silakan input nilai di atas.</td></tr>`;
+return;
+}
+tbody.innerHTML = inputRows.map((r, i) => `
+<tr>
+<td>${i+1}</td>
+<td><strong>${r.noPeserta}</strong></td>
+<td>${r.cabang}</td>
+<td>${r.golongan}</td>
+<td class="bidang-name">${r.bidang}</td>
+<td>${r.hakim}</td>
+<td><strong style="color:var(--orange-deep)">${r.nilai}</strong></td>
+<td><button class="btn btn-danger" style="padding:4px 10px;font-size:0.78rem" onclick="hapusInputRow(${i})">✕</button></td>
+</tr>
+`).join('');
+}
+
+// ════════════════════════════════════════
+// SAVE TO REKAP
+// ════════════════════════════════════════
+function simpanKeRekap() {
+if (!inputRows.length) { showToast('⚠ Tidak ada data untuk disimpan!'); return; }
+rekapData = rekapData.concat(inputRows.map(r => ({...r})));
+inputRows = [];
+renderInputTable();
+renderRekap();
+showToast('💾 Data berhasil disimpan ke rekapitulasi!');
+}
+
+// ════════════════════════════════════════
+// REKAP RENDER
+// ════════════════════════════════════════
+function getFilteredRekap() {
+const fc = document.getElementById('filterCabang').value;
+const fg = document.getElementById('filterGolongan').value;
+let data = [...rekapData];
+if (fc) data = data.filter(r => r.cabang === fc);
+if (fg) data = data.filter(r => r.golongan === fg);
+return data;
+}
+
+function renderRekap() {
+const container = document.getElementById('rekap-container');
+const data = getFilteredRekap();
+
+if (!data.length) {
+container.innerHTML = `<div class="empty-rekap">Belum ada data rekapitulasi atau tidak ada yang cocok dengan filter.</div>`;
+return;
+}
+
+// Group by cabang + golongan + bidang
+const groups = {};
+data.forEach(r => {
+const key = `${r.cabang}||${r.golongan}||${r.bidang}`;
+if (!groups[key]) groups[key] = { cabang: r.cabang, golongan: r.golongan, bidang: r.bidang, rows: [] };
+groups[key].rows.push(r);
+});
+
+// Sort each group by nilai DESC
+Object.values(groups).forEach(g => {
+g.rows.sort((a, b) => b.nilai - a.nilai);
+});
+
+// Build table HTML
+let html = `
+<table id="rekap-table">
+<thead>
+<tr>
+<th rowspan="2">Urut</th>
+<th rowspan="2">No. Peserta</th>
+<th rowspan="2">Cabang</th>
+<th rowspan="2">Golongan</th>
+<th rowspan="2">Bidang Penilaian</th>
+<th rowspan="2">Nama Dewan Hakim</th>
+<th colspan="1">Nilai</th>
+<th rowspan="2">Keterangan</th>
+</tr>
+<tr>
+<th>Akhir (/100)</th>
+</tr>
+</thead>
+<tbody>`;
+
+let globalNo = 0;
+Object.values(groups).forEach(g => {
+g.rows.forEach((r, idx) => {
+globalNo++;
+const rank = idx + 1;
+let rankBadge = `<span class="rank-badge rank-other">${rank}</span>`;
+if (rank === 1) rankBadge = `<span class="rank-badge rank-1">1</span>`;
+else if (rank === 2) rankBadge = `<span class="rank-badge rank-2">2</span>`;
+else if (rank === 3) rankBadge = `<span class="rank-badge rank-3">3</span>`;
+
+html += `
+<tr>
+<td>${globalNo}</td>
+<td><strong>${r.noPeserta}</strong></td>
+<td>${r.cabang}</td>
+<td>${r.golongan}</td>
+<td class="bidang-name">${r.bidang}</td>
+<td>${r.hakim}</td>
+<td class="total-cell">${r.nilai}</td>
+<td>${rankBadge}</td>
+</tr>`;
+});
+});
+
+html += `</tbody></table>`;
+container.innerHTML = html;
+}
+
+// ════════════════════════════════════════
+// EXPORT EXCEL
+// ════════════════════════════════════════
+function exportExcel() {
+const data = getFilteredRekap();
+if (!data.length) { showToast('⚠ Tidak ada data untuk diekspor!'); return; }
+
+// Group & sort sama seperti renderRekap
+const groups = {};
+data.forEach(r => {
+const key = `${r.cabang}||${r.golongan}||${r.bidang}`;
+if (!groups[key]) groups[key] = { cabang: r.cabang, golongan: r.golongan, bidang: r.bidang, rows: [] };
+groups[key].rows.push(r);
+});
+Object.values(groups).forEach(g => g.rows.sort((a, b) => b.nilai - a.nilai));
+
+const wsData = [
+['REKAPITULASI NILAI AKHIR MUSABAQOH TILAWATIL QUR\'AN XII TAHUN 2026'],
+['TINGKAT KABUPATEN SERAM BAGIAN TIMUR'],
+['Lembaga Pengembangan Tilawatil Qur\'an (LPTQ)'],
+[],
+['No. Urut', 'No. Peserta', 'Cabang', 'Golongan', 'Bidang Penilaian', 'Nama Dewan Hakim', 'Nilai Akhir (/100)', 'Peringkat']
+];
+
+let no = 0;
+Object.values(groups).forEach(g => {
+g.rows.forEach((r, idx) => {
+no++;
+wsData.push([no, r.noPeserta, r.cabang, r.golongan, r.bidang, r.hakim, r.nilai, idx + 1]);
+});
+});
+
+const wb = XLSX.utils.book_new();
+const ws = XLSX.utils.aoa_to_sheet(wsData);
+
+// Lebar kolom
+ws['!cols'] = [
+{wch: 8}, {wch: 14}, {wch: 12}, {wch: 14}, {wch: 22}, {wch: 26}, {wch: 16}, {wch: 10}
+];
+
+// Merge header rows
+ws['!merges'] = [
+{s:{r:0,c:0}, e:{r:0,c:7}},
+{s:{r:1,c:0}, e:{r:1,c:7}},
+{s:{r:2,c:0}, e:{r:2,c:7}},
+];
+
+XLSX.utils.book_append_sheet(wb, ws, 'Rekapitulasi MTQ XII');
+XLSX.writeFile(wb, 'Rekapitulasi_MTQ_XII_2026_SBT.xlsx');
+showToast('📥 File Excel berhasil diunduh!');
+}
+
+// ════════════════════════════════════════
+// TABS
+// ════════════════════════════════════════
+function switchTab(tab) {
+document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+document.getElementById(`tab-${tab}`).classList.add('active');
+event.target.classList.add('active');
+if (tab === 'rekap') renderRekap();
+}
+
+// ════════════════════════════════════════
+// TOAST
+// ════════════════════════════════════════
+function showToast(msg) {
+const t = document.getElementById('toast');
+t.textContent = msg;
+t.classList.add('show');
+setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ════════════════════════════════════════
+// Filter golongan sync with cabang filter
+// ════════════════════════════════════════
+document.getElementById('filterCabang').addEventListener('change', function() {
+const fg = document.getElementById('filterGolongan');
+fg.innerHTML = '<option value="">Semua Golongan</option>';
+(GOLONGAN_MAP[this.value] || []).forEach(g => {
+fg.innerHTML += `<option value="${g}">${g}</option>`;
+});
+renderRekap();
+});
+</script>
+</body>
+</html>
+
+
